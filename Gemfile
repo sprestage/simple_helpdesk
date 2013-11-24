@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
+# Specify ruby version for Heroku deploy
+ruby '2.0.0'
 
 gem 'rails', '3.2.15'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'pg'
 
 
 # Gems used only for assets and not required
@@ -21,6 +23,23 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+group :production do
+  gem 'rails_12factor'
+end
+
+group :development, :test do
+  gem 'minitest', '> 4.0'
+  gem 'minitest-rails'
+  gem 'pry-rails'
+  gem 'pry-doc'
+  gem 'pry-debugger'
+  gem 'figaro'
+end
+
+group :test do
+  gem 'turn'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

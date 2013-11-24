@@ -13,3 +13,10 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore temp files that I create for my own use.
+/*temp*
+/.*temp*
+
+# Ignore the secret keys stored (thanks to Figaro) in the environment variables.
+/config/application.yml
