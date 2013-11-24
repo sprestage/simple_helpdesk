@@ -8,6 +8,9 @@ gem 'rails', '3.2.15'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'mail'
+gem 'postmark'
+gem 'postmark-rails'
 
 
 # Gems used only for assets and not required

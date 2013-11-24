@@ -70,6 +70,12 @@ GEM
     multi_json (1.8.2)
     pg (0.17.0)
     polyglot (0.3.3)
+    postmark (1.0.1)
+      json
+      rake
+    postmark-rails (0.5.2)
+      actionmailer (>= 3.0.0)
+      postmark (~> 1.0)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -143,9 +149,12 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   figaro
   jquery-rails
+  mail
   minitest (> 4.0)
   minitest-rails
   pg
+  postmark
+  postmark-rails
   pry-debugger
   pry-doc
   pry-rails
