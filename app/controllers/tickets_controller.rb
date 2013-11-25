@@ -44,6 +44,16 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.save
+        email_sender = Postmark::ApiClient.new(ENV['POSTMARK_API_KEY'])
+
+        email_sender.deliver(from: "admin@unofficialtrakehnerdatabase.com",
+                             to: "susan.prestage@gmail.com",
+                             subject: "New Help Ticket: #{@ticket.summary}",
+                             text_body: @ticket.problem)
+        # TODO: Send the email here.  How do I call TestMailer's tagged_massage
+        #  from the testmailer.rb?  Also need to send Ticket's Summary and Problem
+        #  in the body of the email.  Perhaps the Subject of the email should be
+        #  an indicator 'New Help Ticket: ' + the Ticket's Summary.
         format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
         format.json { render json: @ticket, status: :created, location: @ticket }
       else
