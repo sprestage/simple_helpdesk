@@ -42,11 +42,14 @@ class TicketsController < ApplicationController
   def create
     @ticket = Ticket.new(params[:ticket])
 
+    # reply_to_address "2ddfa4399d3128bf1440462efb3eb4e5@inbound.postmarkapp.com"
+
     respond_to do |format|
       if @ticket.save
         email_sender = Postmark::ApiClient.new(ENV['POSTMARK_API_KEY'])
 
         email_sender.deliver(from: "admin@unofficialtrakehnerdatabase.com",
+                             reply_to: "2ddfa4399d3128bf1440462efb3eb4e5@inbound.postmarkapp.com",
                              to: "susan.prestage@gmail.com",
                              subject: "New Help Ticket: #{@ticket.summary}",
                              text_body: @ticket.problem)
