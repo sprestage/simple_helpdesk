@@ -5,7 +5,7 @@ class TestMailer < ActionMailer::Base
 
     email_sender.deliver(from: "admin@unofficialtrakehnerdatabase.com",
                          to: "susan.prestage@gmail.com",
-                         subject: "New Help Ticket: #{ticket.summary}",
+                         subject: "FOOOOHelp Ticket [#{ticket.id}]: #{ticket.summary}",
                          text_body: ticket.problem)
   end
 

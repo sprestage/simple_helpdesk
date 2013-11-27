@@ -1,4 +1,5 @@
 class TicketsController < ApplicationController
+skip_before_filter :verify_authenticity_token
   # GET /tickets
   # GET /tickets.json
   def index
@@ -42,21 +43,14 @@ class TicketsController < ApplicationController
   def create
     @ticket = Ticket.new(params[:ticket])
 
-    # reply_to_address "2ddfa4399d3128bf1440462efb3eb4e5@inbound.postmarkapp.com"
-
     respond_to do |format|
       if @ticket.save
         email_sender = Postmark::ApiClient.new(ENV['POSTMARK_API_KEY'])
-
         email_sender.deliver(from: "admin@unofficialtrakehnerdatabase.com",
                              reply_to: "2ddfa4399d3128bf1440462efb3eb4e5@inbound.postmarkapp.com",
                              to: "susan.prestage@gmail.com",
-                             subject: "New Help Ticket: #{@ticket.summary}",
+                             subject: "Help Ticket [#{@ticket.id}]: #{@ticket.summary}",
                              text_body: @ticket.problem)
-        # TODO: Send the email here.  How do I call TestMailer's tagged_massage
-        #  from the testmailer.rb?  Also need to send Ticket's Summary and Problem
-        #  in the body of the email.  Perhaps the Subject of the email should be
-        #  an indicator 'New Help Ticket: ' + the Ticket's Summary.
         format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
         format.json { render json: @ticket, status: :created, location: @ticket }
       else
@@ -91,6 +85,25 @@ class TicketsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tickets_url }
       format.json { head :no_content }
+    end
+  end
+
+  def inbound
+    logger.info request.body.inspect
+
+    subject = request.params["Subject"]
+    m = subject.match(/([^\?]*)\Help Ticket \[(\d*)/)
+    ticket_id = m[2]
+
+    ticket = Ticket.find(ticket_id)
+
+    body = request.params["TextBody"]
+    ticket.response = body
+
+    if ticket.save
+      redirect_to ticket
+    else
+      raise Exception.new 'Ticket save failed!!!'
     end
   end
 end
