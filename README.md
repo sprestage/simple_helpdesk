@@ -3,6 +3,7 @@ Simple Helpdesk
 
 A simple rails application that acts as a minimal help desk.  Tickets get submitted, email gets sent to admin, admin replies to ticket via email.  Ticket and response are displayed.
 
+[![Code Climate](https://codeclimate.com/github/sprestage/simple_helpdesk.png)](https://codeclimate.com/github/sprestage/simple_helpdesk)
 
 Basic Install
 =======
