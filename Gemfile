@@ -36,7 +36,7 @@ group :development, :test do
   gem 'minitest-rails'
   gem 'pry-rails'
   gem 'pry-doc'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'figaro'
 end
 
@@ -57,4 +57,4 @@ end
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+# gem 'byebug'
